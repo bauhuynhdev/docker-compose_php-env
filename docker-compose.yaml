@@ -1,0 +1,32 @@
+version: '3'
+
+networks:
+  bau:
+
+services:
+  web:
+    container_name: dev-env_web
+    build:
+      context: ./docker/web
+    ports:
+      - "8081:80"
+    volumes:
+      - ./src:/var/www/web
+      - ./docker/web/logs:/var/log/nginx
+    networks:
+      bau:
+  mysql:
+    container_name: dev-env_mysql
+    image: mysql:8.0
+    ports:
+      - "8082:3306"
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 123456
+    networks:
+      bau:
