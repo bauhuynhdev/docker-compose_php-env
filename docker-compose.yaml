@@ -28,3 +28,11 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     networks:
       bau:
+  redis:
+    container_name: ${APP_NAME}_redis
+    build:
+      context: ./docker/redis
+      args:
+        REDIS_PASSWORD: ${REDIS_PASSWORD}
+    ports:
+      - "${REDIS_PORT}:6379"
