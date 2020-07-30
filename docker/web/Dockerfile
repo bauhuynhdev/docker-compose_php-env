@@ -43,9 +43,9 @@ RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/lo
 RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - && \
     apt-get install -y nodejs build-essential
 
-COPY default /etc/nginx/sites-available/default
+#COPY default /etc/nginx/sites-available/default
 
-COPY php.ini /etc/php/7.4/cli/php.ini
+#COPY php.ini /etc/php/7.4/cli/php.ini
 
 WORKDIR /var/www/web
 

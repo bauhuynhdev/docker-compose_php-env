@@ -13,6 +13,8 @@ services:
     volumes:
       - ${ROOT_PATH}:/var/www/web
       - ./docker/web/logs:/var/log/nginx
+      - ./docker/web/default:/etc/nginx/sites-available/default
+      - ./docker/web/php.ini:/etc/php/7.4/cli/php.ini
     networks:
       bau:
   mysql:
@@ -33,6 +35,6 @@ services:
     build:
       context: ./docker/redis
       args:
-        REDIS_PASSWORD: ${REDIS_PASSWORD}
+        ENV: 'ENV'
     ports:
       - "${REDIS_PORT}:6379"
