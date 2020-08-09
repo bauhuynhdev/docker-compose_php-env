@@ -1,53 +1,59 @@
-FROM ubuntu:18.04
+FROM centos:8
 
 MAINTAINER Bau Huynh <bauhuynhdev@gmail.com>
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install common
-RUN apt-get update -y && \
-    apt-get install -f -y && \
-    apt-get install -y \
-    software-properties-common \
+RUN yum update -y && \
+    yum install -y \
+    epel-release \
+    yum-utils \
     openssl \
     zip \
     unzip \
     curl \
-    git
+    git && \
+    dnf install -y \
+    dnf-utils
 
 # Install Nginx
-RUN add-apt-repository ppa:nginx/stable -y && \
-    apt-get update -y && \
-    apt-get install -y nginx
+COPY repo/nginx.repo /etc/yum.repos.d/
+RUN yum install -y nginx
+COPY default.conf /etc/nginx/conf.d/
 
 # Install PHP
-RUN add-apt-repository ppa:ondrej/php -y && \
-    apt-get update -y && \
-    apt-get install -y \
-    php7.4-cli \
-    php7.4-common \
-    php7.4-fpm \
-    php7.4-mysql \
-    php7.4-mysqlnd \
-    php7.4-gd \
-    php7.4-pdo \
-    php7.4-mbstring \
-    php7.4-xmlrpc \
-    php7.4-zip \
-    php7.4-bcmath \
-    php7.4-json \
-    php7.4-xml
+RUN dnf install -y http://rpms.remirepo.net/enterprise/remi-release-8.rpm && \
+    dnf module reset php -y && \
+    dnf module enable php:remi-7.4 -y && \
+    dnf install -y \
+    php \
+    php-cli \
+    php-common \
+    php-fpm \
+    php-mysql \
+    php-mysqlnd \
+    php-gd \
+    php-pdo \
+    php-mbstring \
+    php-xmlrpc \
+    php-zip \
+    php-bcmath \
+    php-json \
+    php-xml
+COPY www.conf /etc/php-fpm.d
+RUN mkdir /run/php-fpm
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 
 # Install Nodejs
-RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - && \
-    apt-get install -y nodejs build-essential
+RUN curl -sL https://rpm.nodesource.com/setup_lts.x | bash - && \
+    yum install -y gcc-c++ make nodejs
 
 WORKDIR /var/www/web
 
 EXPOSE 80 443
 
-CMD service php7.4-fpm start && \
+CMD php-fpm -D && \
     nginx -g "daemon off;"

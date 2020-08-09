@@ -12,8 +12,7 @@ services:
       - "${HTTP_PORT}:80"
     volumes:
       - ${ROOT_PATH}:/var/www/web
-      - ./docker/web/default:/etc/nginx/sites-available/default
-      - ./docker/web/php.ini:/etc/php/7.4/cli/php.ini
+#      - ./docker/web/php.ini:/etc/php/7.4/cli/php.ini
       - ./docker/web/logs:/var/log/nginx
     networks:
       bau:
