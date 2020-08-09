@@ -45,6 +45,11 @@ RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/lo
 RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash - && \
     apt-get install -y nodejs build-essential
 
+# Cleanup
+RUN apt-get clean autoclean && \
+    apt-get autoremove --yes && \
+    rm -rf /var/lib/{apt,dpkg,cache,log}/
+
 WORKDIR /var/www/web
 
 EXPOSE 80 443
