@@ -51,6 +51,11 @@ RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/lo
 RUN curl -sL https://rpm.nodesource.com/setup_lts.x | bash - && \
     yum install -y gcc-c++ make nodejs
 
+# Cleanup
+RUN yum clean all && \
+    rm -rf /var/cache/yum && \
+    dnf clean all
+
 WORKDIR /var/www/web
 
 EXPOSE 80 443

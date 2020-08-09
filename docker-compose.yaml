@@ -40,7 +40,5 @@ services:
     container_name: ${APP_NAME}_redis
     build:
       context: ./docker/redis
-      args:
-        ENV: 'ENV'
     ports:
       - "${REDIS_PORT}:6379"
