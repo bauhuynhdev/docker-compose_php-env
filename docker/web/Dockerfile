@@ -58,7 +58,7 @@ RUN yum clean all && \
 
 WORKDIR /var/www/web
 
-EXPOSE 80 443
+EXPOSE 81 82
 
 CMD php-fpm -D && \
     nginx -g "daemon off;"
