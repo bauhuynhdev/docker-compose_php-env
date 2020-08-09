@@ -20,7 +20,7 @@ RUN yum update -y && \
 # Install Nginx
 COPY repo/nginx.repo /etc/yum.repos.d/
 RUN yum install -y nginx
-COPY default.conf /etc/nginx/conf.d/
+#COPY default.conf /etc/nginx/conf.d/
 
 # Install PHP
 RUN dnf install -y http://rpms.remirepo.net/enterprise/remi-release-8.rpm && \
@@ -41,7 +41,7 @@ RUN dnf install -y http://rpms.remirepo.net/enterprise/remi-release-8.rpm && \
     php-bcmath \
     php-json \
     php-xml
-COPY www.conf /etc/php-fpm.d
+#COPY www.conf /etc/php-fpm.d
 RUN mkdir /run/php-fpm
 
 # Install Composer
