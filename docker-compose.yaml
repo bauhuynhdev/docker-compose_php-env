@@ -9,8 +9,7 @@ services:
     build:
       context: ./docker/web
     ports:
-      - "8081:81"
-      - "8082:82"
+      - "80:80"
     volumes:
 #      Root path
       - ./src/demo1:/var/www/demo1
