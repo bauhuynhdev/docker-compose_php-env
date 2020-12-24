@@ -57,6 +57,8 @@ RUN yum clean all && \
     rm -rf /var/cache/yum && \
     dnf clean all
 
+COPY index.php /var/www/web/
+
 WORKDIR /var/www/web
 
 EXPOSE 80 443
