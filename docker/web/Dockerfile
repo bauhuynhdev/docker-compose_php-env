@@ -57,6 +57,8 @@ RUN yum clean all && \
     rm -rf /var/cache/yum && \
     dnf clean all
 
+RUN dnf install -y php-redis
+
 COPY index.php /var/www/web/
 
 WORKDIR /var/www/web
